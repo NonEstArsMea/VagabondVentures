@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MainButton" parent="@style/Widget.Material3.Button.IconButton.Outlined">
+        <item name="backgroundTint">@color/col_button_background_color</item>
+        <item name="strokeColor">@color/col_button_background_color</item>
+        <item name="iconTint">@color/white</item>
+    </style>
+
+    <style name="MainButton.TextButton" parent="@style/Widget.Material3.Button.IconButton.Outlined">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>

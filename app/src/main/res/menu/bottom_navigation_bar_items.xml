@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/dmb_timer"
+        android:icon="@drawable/timer"
+        android:title="Таймер" />
+    <item
+        android:id="@+id/calendar"
+        android:icon="@drawable/calendar"
+        android:title="Календарь" />
+
+    <item
+        android:id="@+id/posts"
+        android:icon="@drawable/website_2"
+        android:title="Статьи" />
+    <item
+        android:id="@+id/chat"
+        android:icon="@drawable/mail"
+        android:title="Чат" />
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/setting_2"
+        android:title="Настройки" />
+</menu>
