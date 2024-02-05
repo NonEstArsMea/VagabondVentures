@@ -1,5 +1,6 @@
 package raa.example.timerscreen.ui
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import raa.example.timer_screen.databinding.FragmentAddPersonBinding
+import raa.example.timerscreen.data.RepositoryImpl
 import raa.example.timerscreen.domain.PersonParam
 
 
@@ -53,6 +55,7 @@ class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {
     }
 
     override fun onPositiveClick(year: Int, month: Int, day: Int, text: String) {
+
         list.add(PersonParam(text, year, month, day))
         mainParamAdapter.submitList(list)
     }
