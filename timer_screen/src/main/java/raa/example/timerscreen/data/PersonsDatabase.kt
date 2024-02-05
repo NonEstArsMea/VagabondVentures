@@ -31,7 +31,6 @@ abstract class PersonsDatabase : RoomDatabase() {
                 INSTANCE = db
                 return db
             }
-
         }
     }
 

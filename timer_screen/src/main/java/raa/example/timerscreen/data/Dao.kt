@@ -10,7 +10,7 @@ import androidx.room.Query
 interface Dao {
 
     @Query("SELECT * FROM persons_profiles")
-    fun getPersonsParam(): LiveData<List<PersonParamEntity>>
+    fun getPersonsParamList(): LiveData<List<PersonParamEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addPersonParam(personParamEntity: PersonParamEntity)
