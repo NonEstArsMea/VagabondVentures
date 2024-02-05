@@ -15,8 +15,8 @@
             <option value="$PROJECT_DIR$/chat" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/profile" />
             <option value="$PROJECT_DIR$/res" />
-            <option value="$PROJECT_DIR$/setting" />
             <option value="$PROJECT_DIR$/timer_screen" />
           </set>
         </option>

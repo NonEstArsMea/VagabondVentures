@@ -4,14 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
 import raa.example.timer_screen.R
-import raa.example.timerscreen.data.PersonParam
+import raa.example.timerscreen.domain.PersonParam
 import raa.example.timerscreen.renameMonth
-import java.time.Year
 
 class RecycleViewAdapter :
     ListAdapter<PersonParam, RecycleViewAdapter.RVOnSearchFragmentViewHolder>(

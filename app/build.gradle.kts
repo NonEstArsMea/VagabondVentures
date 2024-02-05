@@ -53,7 +53,7 @@ dependencies {
     implementation(project(":calendar"))
     implementation(project(":articles"))
     implementation(project(":chat"))
-    implementation(project(":setting"))
+    implementation(project(":profile"))
     implementation(project(":res"))
 
 }

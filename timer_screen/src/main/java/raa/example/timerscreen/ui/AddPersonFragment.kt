@@ -1,14 +1,13 @@
 package raa.example.timerscreen.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import raa.example.timer_screen.databinding.FragmentAddPersonBinding
-import raa.example.timerscreen.data.PersonParam
+import raa.example.timerscreen.domain.PersonParam
 
 
 class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {

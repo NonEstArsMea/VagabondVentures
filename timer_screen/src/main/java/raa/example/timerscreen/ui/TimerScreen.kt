@@ -3,7 +3,9 @@ package raa.example.timerscreen.ui
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.graphics.Matrix
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,14 +30,8 @@ import kotlin.math.sin
 
 class TimerScreen : Fragment() {
 
-    companion object {
-        fun newInstance() = TimerScreen()
-    }
-
     private var _binding: FragmentTimerScreenBinding? = null
     private val binding get() = _binding!!
-
-    val entries = ArrayList<PieEntry>()
 
     private val viewModel: TimerScreenViewModel by viewModels()
 
@@ -51,25 +47,33 @@ class TimerScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        entries.add(PieEntry(1f, "Прошло"))
-        entries.add(PieEntry(999f, "Осталось"))
 
         initState()
+        initBlurView(view.background)
+        initBackImageAnimation()
+
         binding.addPersonButton.setOnClickListener {
 
             val container = requireActivity() as? OpenAddPersonFragment
             container?.openFragment(AddPersonFragment.newInstance())
 
         }
+    }
 
+    private fun initBlurView(view: Drawable) {
         val rootView = binding.layoutWithImage
-        val windowBackground = view.background
-
         binding.blureView.setupWith(rootView, RenderScriptBlur(this.requireContext()))
-            .setFrameClearDrawable(windowBackground)
+            .setFrameClearDrawable(view)
             .setBlurRadius(10f)
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
 
+        _binding = null
+    }
+
+    private fun initBackImageAnimation() {
         val backgroundImageView = binding.imageView
 
         val animator = ValueAnimator.ofFloat(0f, 2 * Math.PI.toFloat())
@@ -83,19 +87,17 @@ class TimerScreen : Fragment() {
             }
             start()
         }
-
     }
-
 
     private fun updateBackgroundPosition(fraction: Float, imageView: ImageView) {
         val matrix = Matrix()
 
-        // Получаем размеры изображения
+        // Размеры изображения
         val drawable = imageView.drawable
         val drawableWidth = drawable.intrinsicWidth
         val drawableHeight = drawable.intrinsicHeight
 
-        // Рассчитываем максимальные смещения, чтобы не выходить за границы
+        // Максимальные смещения, чтобы не выходить за границы
         val maxTranslateX = imageView.width - drawableWidth
         val maxTranslateY = imageView.height - drawableHeight
 
@@ -105,20 +107,18 @@ class TimerScreen : Fragment() {
         val ovalRadiusX = maxTranslateX / 2f * 0.8f
         val ovalRadiusY = maxTranslateY / 2f * 0.7f
 
-        // Рассчитываем новые координаты с учетом овальной траектории и случайного смещения
+        // Новые координаты с учетом овальной траектории и случайного смещения
         val translateX = (ovalCenterX + ovalRadiusX * cos(fraction)).toFloat()
         val translateY = (ovalCenterY + ovalRadiusY * sin(fraction)).toFloat()
 
-
-        // Применяем смещение к матрице
         matrix.postTranslate(translateX, translateY)
 
-        // Устанавливаем новую матрицу
         imageView.imageMatrix = matrix
     }
 
 
     private fun initState() {
+
         lifecycleScope.launch {
             viewModel.state
                 .transform {
@@ -128,11 +128,8 @@ class TimerScreen : Fragment() {
                 .collect {
                     when (it) {
                         is Content -> {
-                            entries[0] = PieEntry(it.count, "Прошло")
-                            entries[1] = PieEntry(1000f - it.count, "Осталось")
-
-                            val dataSet = getPieDataSet(entries)
-                            drawPie(PieData(dataSet))
+                            val dataSet = getPieDataSet(it.entry)
+                            drawPie(PieData(dataSet), it.a)
                         }
 
                         is Loading -> TODO()
@@ -142,20 +139,20 @@ class TimerScreen : Fragment() {
     }
 
 
-    private fun drawPie(data: PieData) {
+    private fun drawPie(data: PieData, count: Float) {
         binding.pie.apply {
             this.data = data
 
             description.isEnabled = false
             setHoleColor(Color.TRANSPARENT) // Прозрачная внутренняя область (дырка)
-            holeRadius = 90f
-            transparentCircleRadius = 40f
+            holeRadius = 80f
+            transparentCircleRadius = 10f
             setTransparentCircleColor(Color.TRANSPARENT)
             setDrawEntryLabels(false) // Не рисовать метки внутри секторов
+            setDrawCenterText(true)
+            setEntryLabelColor(Color.TRANSPARENT)
             legend.isEnabled = false // Не показывать легенду
-
-            setEntryLabelTextSize(14f)
-            setEntryLabelColor(Color.WHITE)
+            setNoDataTextColor(Color.TRANSPARENT)
 
             animateY(0)
 
@@ -164,28 +161,25 @@ class TimerScreen : Fragment() {
     }
 
     private fun getPieDataSet(entries: ArrayList<PieEntry>): PieDataSet {
-        val dataSet = PieDataSet(entries, "My Pie Chart")
+        val dataSet = PieDataSet(entries, PIE_DATA_SET_LABLE)
         dataSet.colors = listOf(
-            Color.rgb(148, 87, 235), // Фиолетовый
-            Color.rgb(186, 104, 200), // Фиолетово-розовый
+            Color.WHITE,
+            Color.argb(128,255,255,255)
         )
-        dataSet.valueTextColor = Color.WHITE
-        dataSet.valueTextSize = 12f
-        dataSet.sliceSpace = 5f
-        dataSet.selectionShift = 10f
+        dataSet.valueTextColor = Color.TRANSPARENT
+        dataSet.sliceSpace = 0f
 
         return dataSet
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        _binding = null
-    }
-
     interface OpenAddPersonFragment {
         fun openFragment(fragment: Fragment)
+    }
+
+    companion object {
+        private const val PIE_DATA_SET_LABLE = ""
+
+        fun newInstance() = TimerScreen()
     }
 
 
