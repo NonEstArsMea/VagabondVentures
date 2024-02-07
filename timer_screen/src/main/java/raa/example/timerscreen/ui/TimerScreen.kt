@@ -2,6 +2,7 @@ package raa.example.timerscreen.ui
 
 import android.animation.ValueAnimator
 import android.graphics.Color
+import android.graphics.DashPathEffect
 import android.graphics.Matrix
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -55,7 +56,7 @@ class TimerScreen : Fragment() {
         binding.addPersonButton.setOnClickListener {
 
             val container = requireActivity() as? OpenAddPersonFragment
-            container?.openFragment(AddPersonFragment.newInstance())
+            container?.openFragment()
 
         }
     }
@@ -166,14 +167,14 @@ class TimerScreen : Fragment() {
             Color.WHITE,
             Color.argb(128,255,255,255)
         )
-        dataSet.valueTextColor = Color.TRANSPARENT
+        //dataSet.valueTextColor = Color.TRANSPARENT
         dataSet.sliceSpace = 0f
 
         return dataSet
     }
 
     interface OpenAddPersonFragment {
-        fun openFragment(fragment: Fragment)
+        fun openFragment()
     }
 
     companion object {

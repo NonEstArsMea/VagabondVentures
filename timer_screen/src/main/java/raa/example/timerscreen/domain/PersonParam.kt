@@ -11,6 +11,6 @@ data class PersonParam(
     var id: Int = UNDEFINED_ID
 ){
     companion object{
-        private const val UNDEFINED_ID = -1
+        private const val UNDEFINED_ID = 0
     }
 }

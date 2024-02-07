@@ -11,7 +11,7 @@ data class PersonParamEntity(
     val year: Int,
     val month: Int,
     val day: Int,
-    val yearEnd: Int? = null,
-    val monthEnd: Int? = null,
-    val dayEnd: Int? = null
+    val yearEnd: Int?,
+    val monthEnd: Int?,
+    val dayEnd: Int?
 )

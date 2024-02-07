@@ -1,5 +1,6 @@
 package raa.example.timerscreen.data
 
+import android.util.Log
 import raa.example.timerscreen.domain.PersonParam
 
 class Mapper {
@@ -31,6 +32,7 @@ class Mapper {
     }
 
     fun mapListDBModekToListEntity(list:List<PersonParamEntity>)=list.map {
+        Log.e("Entity", it.toString())
         mapDBmodelToEntity(it)
     }
 }

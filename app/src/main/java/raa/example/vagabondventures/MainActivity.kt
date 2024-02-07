@@ -87,9 +87,9 @@ class MainActivity : AppCompatActivity(), TimerScreen.OpenAddPersonFragment {
             .commit()
     }
 
-    override fun openFragment(fragment: Fragment) {
+    override fun openFragment() {
         supportFragmentManager.beginTransaction()
-            .add(R.id.main_fragment_container, AddPersonFragment.newInstance())
+            .add(R.id.main_fragment_container, AddPersonFragment.newInstance(application))
             .addToBackStack(null)
             .commit()
     }

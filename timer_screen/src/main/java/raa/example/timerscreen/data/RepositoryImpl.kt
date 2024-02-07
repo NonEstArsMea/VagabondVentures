@@ -1,9 +1,12 @@
 package raa.example.timerscreen.data
 
 import android.app.Application
+import android.util.Log
 import android.view.animation.Transformation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.map
+import kotlinx.coroutines.coroutineScope
 import raa.example.timerscreen.domain.PersonParam
 
 class RepositoryImpl(
@@ -18,7 +21,8 @@ class RepositoryImpl(
     }
 
     fun addPersonParam(personParam: PersonParam){
-        profileDao.addPersonParam(mapper.mapEntityToDBmodel(personParam))
+            profileDao.addPersonParam(mapper.mapEntityToDBmodel(personParam))
+
     }
 
     fun delPersonParam(delId: Int){
@@ -30,9 +34,9 @@ class RepositoryImpl(
         return mapper.mapDBmodelToEntity(dbModel)
     }
 
-    fun getPersonParamList(): LiveData<List<PersonParam>> = MediatorLiveData<List<PersonParam>>().apply {
-        addSource(profileDao.getPersonsParamList()){
-            value = mapper.mapListDBModekToListEntity(it)
+    fun getPersonParamList(): List<PersonParam> {
+        return profileDao.getPersonsParamList().map {
+            mapper.mapDBmodelToEntity(it)
         }
     }
 
