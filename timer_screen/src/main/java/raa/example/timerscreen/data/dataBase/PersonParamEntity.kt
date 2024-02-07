@@ -1,4 +1,4 @@
-package raa.example.timerscreen.data
+package raa.example.timerscreen.data.dataBase
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

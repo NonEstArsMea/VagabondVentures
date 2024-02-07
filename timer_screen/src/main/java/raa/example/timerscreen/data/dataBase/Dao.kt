@@ -1,6 +1,5 @@
-package raa.example.timerscreen.data
+package raa.example.timerscreen.data.dataBase
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy

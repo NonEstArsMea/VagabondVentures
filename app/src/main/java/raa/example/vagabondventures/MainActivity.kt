@@ -28,16 +28,12 @@ class MainActivity : AppCompatActivity(), TimerScreen.OpenAddPersonFragment {
             replaceFragment(TimerScreen.newInstance())
         }
 
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-
-        setContentView(view)
-
-
-
-
         hideSystemUI()
         bindBottomNavBar()
+
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
     }
 
     private fun hideSystemUI(){
@@ -89,7 +85,7 @@ class MainActivity : AppCompatActivity(), TimerScreen.OpenAddPersonFragment {
 
     override fun openFragment() {
         supportFragmentManager.beginTransaction()
-            .add(R.id.main_fragment_container, AddPersonFragment.newInstance(application))
+            .add(R.id.main_fragment_container, AddPersonFragment.newInstance())
             .addToBackStack(null)
             .commit()
     }

@@ -1,4 +1,4 @@
-package raa.example.timerscreen.data
+package raa.example.timerscreen.data.dataBase
 
 import android.util.Log
 import raa.example.timerscreen.domain.PersonParam

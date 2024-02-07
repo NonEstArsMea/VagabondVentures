@@ -17,10 +17,14 @@ class RecycleViewAdapter :
     class RVOnSearchFragmentViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val name = view.findViewById<TextView>(R.id.name)
         val date = view.findViewById<TextView>(R.id.date)
+        val number = view.findViewById<TextView>(R.id.number)
+        val endDate = view.findViewById<TextView>(R.id.end_date)
 
-        fun bind(text: String, year: Int, month: Int, day: Int) {
+        fun bind(text: String, dateStart: String, dateEnd: String, position: Int) {
             name.text = text
-            date.text = "$day ${renameMonth(month)} $year"
+            date.text = "$dateStart"
+            endDate.text = "$dateEnd"
+            number.text = position.toString()
         }
     }
 
@@ -37,7 +41,9 @@ class RecycleViewAdapter :
 
     override fun onBindViewHolder(holder: RVOnSearchFragmentViewHolder, position: Int) {
         currentList[position].apply {
-            holder.bind(name, year, month, day)
+            val dateStart = "$day ${renameMonth(month)} $year"
+            val dateEnd = if (monthEnd != null) "$dayEnd ${renameMonth(monthEnd)} $yearEnd" else ""
+            holder.bind(name, dateStart, dateEnd, position + 1)
         }
 
     }

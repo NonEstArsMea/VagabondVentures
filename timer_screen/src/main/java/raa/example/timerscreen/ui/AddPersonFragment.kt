@@ -9,21 +9,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.withContext
 import raa.example.timer_screen.databinding.FragmentAddPersonBinding
-import raa.example.timerscreen.data.RepositoryImpl
 import raa.example.timerscreen.domain.PersonParam
-import kotlin.concurrent.thread
 
 
-class AddPersonFragment(private val application: Application) : Fragment(), AddPersonDialogFragment.DialogListener {
+class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {
 
     private var _binding: FragmentAddPersonBinding? = null
     private val binding get() = _binding!!
 
     private val mainParamAdapter = RecycleViewAdapter()
 
-    private val viewModel: AddPersomFragmentViewModel by viewModels()
+    private val viewModel: AddPersonFragmentViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -54,7 +51,6 @@ class AddPersonFragment(private val application: Application) : Fragment(), AddP
         }
 
         viewModel.list.observe(viewLifecycleOwner){
-            Log.e("Time",it.toString())
             mainParamAdapter.submitList(it)
         }
 
@@ -75,8 +71,8 @@ class AddPersonFragment(private val application: Application) : Fragment(), AddP
 
     companion object {
         @JvmStatic
-        fun newInstance(application: Application): AddPersonFragment{
-            return AddPersonFragment(application)
+        fun newInstance(): AddPersonFragment{
+            return AddPersonFragment()
         }
 
     }

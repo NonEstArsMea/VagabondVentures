@@ -31,6 +31,15 @@
         <item name="android:textSize">16dp</item>
     </style>
 
+    <style name="BackgroundOfView">
+        <item name="android:background">@color/col_background_color</item>
+    </style>
+
+    <style name="MainTextViewStyle.SimpleText">
+        <item name="android:textColor">@color/gray_300</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
 
     <style name="Widget.Theme.VagabondVentures.ButtonBar.Fullscreen" parent="">
         <item name="android:background">@color/white</item>

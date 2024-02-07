@@ -33,7 +33,6 @@ class TimerScreen : Fragment() {
 
     private var _binding: FragmentTimerScreenBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: TimerScreenViewModel by viewModels()
 
 
@@ -154,7 +153,6 @@ class TimerScreen : Fragment() {
             setEntryLabelColor(Color.TRANSPARENT)
             legend.isEnabled = false // Не показывать легенду
             setNoDataTextColor(Color.TRANSPARENT)
-
             animateY(0)
 
         }

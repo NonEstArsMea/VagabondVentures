@@ -128,7 +128,6 @@ class AddPersonDialogFragment : DialogFragment() {
             startService.text = "$day ${renameMonth(month)} $year"
         }
 
-        // Отображение MaterialDatePicker
         datePicker.show(requireActivity().supportFragmentManager, datePicker.toString())
     }
 }

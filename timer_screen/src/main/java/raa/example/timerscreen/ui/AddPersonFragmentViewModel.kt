@@ -1,7 +1,6 @@
 package raa.example.timerscreen.ui
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,7 +9,7 @@ import kotlinx.coroutines.launch
 import raa.example.timerscreen.data.RepositoryImpl
 import raa.example.timerscreen.domain.PersonParam
 
-class AddPersomFragmentViewModel(private val application: Application) :
+class AddPersonFragmentViewModel(application: Application) :
     AndroidViewModel(application) {
 
     val list = MutableLiveData<List<PersonParam>>()
@@ -28,7 +27,6 @@ class AddPersomFragmentViewModel(private val application: Application) :
         viewModelScope.launch(Dispatchers.Default) {
             list.postValue(repository.getPersonParamList())
         }
-
     }
 
 
