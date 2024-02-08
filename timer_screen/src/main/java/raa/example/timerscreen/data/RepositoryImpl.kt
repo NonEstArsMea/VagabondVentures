@@ -12,20 +12,27 @@ class RepositoryImpl(
     private val profileDao = PersonsDatabase.getInstance(application).personParamDao()
     private val mapper = Mapper()
 
-    fun editPersonsParam(personParam: PersonParam){
+    fun editPersonsParam(personParam: PersonParam) {
         profileDao.addPersonParam(mapper.mapEntityToDBmodel(personParam))
     }
 
-    fun addPersonParam(personParam: PersonParam){
-            profileDao.addPersonParam(mapper.mapEntityToDBmodel(personParam))
-
+    fun setSelectedPersonsParam(id: Int) {
+        val listOfPP = getPersonParamList()
+        listOfPP.forEach {
+            it.isSelected = if(it.id == id) 1 else 0
+            profileDao.addPersonParam(mapper.mapEntityToDBmodel(it))
+        }
     }
 
-    fun delPersonParam(delId: Int){
+    fun addPersonParam(personParam: PersonParam) {
+        profileDao.addPersonParam(mapper.mapEntityToDBmodel(personParam))
+    }
+
+    fun delPersonParam(delId: Int) {
         profileDao.delPersonParam(delId)
     }
 
-    fun getPersonsParam(personParamID: Int): PersonParam{
+    fun getPersonsParam(personParamID: Int): PersonParam {
         val dbModel = profileDao.getPersonParam(personParamID)
         return mapper.mapDBmodelToEntity(dbModel)
     }
@@ -34,6 +41,10 @@ class RepositoryImpl(
         return profileDao.getPersonsParamList().map {
             mapper.mapDBmodelToEntity(it)
         }
+    }
+
+    fun updatingMainProfile(){
+
     }
 
 }

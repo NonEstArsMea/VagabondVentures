@@ -14,7 +14,8 @@ class Mapper {
             day=param.day,
             yearEnd=param.yearEnd,
             monthEnd=param.monthEnd,
-            dayEnd=param.dayEnd
+            dayEnd=param.dayEnd,
+            isSelected = param.isSelected
         )
     }
 
@@ -27,12 +28,16 @@ class Mapper {
             day=param.day,
             yearEnd=param.yearEnd,
             monthEnd=param.monthEnd,
-            dayEnd=param.dayEnd
+            dayEnd=param.dayEnd,
+            isSelected = param.isSelected
         )
     }
 
-    fun mapListDBModekToListEntity(list:List<PersonParamEntity>)=list.map {
-        Log.e("Entity", it.toString())
+    fun mapListDBModelToListEntity(list:List<PersonParamEntity>)=list.map {
         mapDBmodelToEntity(it)
+    }
+
+    fun mapListEntityToListDBModel(list:List<PersonParam>)=list.map {
+        mapEntityToDBmodel(it)
     }
 }

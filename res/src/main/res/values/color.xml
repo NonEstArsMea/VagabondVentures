@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="col_background_color">#27282a</color>
+    <color name="col_second_background_color">#388E3C</color>
     <color name="white">#FFFFFF</color>
     <color name="gray_200">#CCCCCC</color>
     <color name="gray_300">#9F9F9F</color>

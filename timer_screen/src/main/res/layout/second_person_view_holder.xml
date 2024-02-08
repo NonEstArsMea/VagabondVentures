@@ -11,6 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/background_of_person_view_holder"
         style="@style/BackgroundOfView"
+        android:background="#4E8C44"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -30,6 +31,7 @@
             <TextView
                 android:id="@+id/number"
                 android:layout_width="30dp"
+                android:textStyle="bold"
                 android:layout_height="30dp"
                 android:background="@color/col_button_background_color"
                 android:gravity="center"
@@ -56,6 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:textStyle="bold"
             android:text="Срочка"
             android:textColor="@color/gray_300"
             app:layout_constraintLeft_toLeftOf="@id/name"
@@ -67,6 +70,7 @@
             style="@style/MainTextViewStyle.SimpleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:text="Начало службы:  "
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/additional_information" />
@@ -89,6 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:textStyle="bold"
             android:text="Окончание службы:  "
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_of_date" />
@@ -110,6 +115,7 @@
             style="@style/MainTextViewStyle.SimpleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_marginTop="5dp"
             android:text="Место службы:  "
             app:layout_constraintLeft_toLeftOf="parent"

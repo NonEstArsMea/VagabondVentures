@@ -54,6 +54,10 @@ class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {
             mainParamAdapter.submitList(it)
         }
 
+        mainParamAdapter.onClickListener = {
+            viewModel.setSelected(it.id)
+        }
+
     }
 
     override fun onDestroy() {

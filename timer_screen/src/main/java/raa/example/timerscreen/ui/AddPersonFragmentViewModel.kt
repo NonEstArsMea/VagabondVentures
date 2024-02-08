@@ -29,5 +29,12 @@ class AddPersonFragmentViewModel(application: Application) :
         }
     }
 
+    fun setSelected(id: Int){
+        viewModelScope.launch(Dispatchers.Default) {
+            repository.setSelectedPersonsParam(id)
+            updateList()
+        }
+    }
+
 
 }

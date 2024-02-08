@@ -8,9 +8,10 @@ data class PersonParam(
     val yearEnd: Int? = null,
     val monthEnd: Int? = null,
     val dayEnd: Int? = null,
-    var id: Int = UNDEFINED_ID
-){
-    companion object{
+    var id: Int = UNDEFINED_ID,
+    var isSelected: Int = 0,
+) {
+    companion object {
         private const val UNDEFINED_ID = 0
     }
 }

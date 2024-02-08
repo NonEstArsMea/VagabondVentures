@@ -13,5 +13,6 @@ data class PersonParamEntity(
     val day: Int,
     val yearEnd: Int?,
     val monthEnd: Int?,
-    val dayEnd: Int?
+    val dayEnd: Int?,
+    val isSelected: Int,
 )
