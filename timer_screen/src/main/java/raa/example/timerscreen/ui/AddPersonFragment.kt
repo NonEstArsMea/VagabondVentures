@@ -1,8 +1,6 @@
 package raa.example.timerscreen.ui
 
-import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,6 +56,10 @@ class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {
             viewModel.setSelected(it.id)
         }
 
+        mainParamAdapter.onLongClickListener = {
+            viewModel.deleteItem(it)
+        }
+
     }
 
     override fun onDestroy() {
@@ -65,8 +67,8 @@ class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {
         _binding = null
     }
 
-    override fun onPositiveClick(year: Int, month: Int, day: Int, text: String) {
-            viewModel.setParam(PersonParam(text, year, month, day))
+    override fun onPositiveClick(param: PersonParam) {
+            viewModel.setParam(param)
     }
 
     override fun onNegativeClick() {

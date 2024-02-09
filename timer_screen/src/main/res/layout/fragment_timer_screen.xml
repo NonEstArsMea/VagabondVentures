@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/col_background_color"
+    android:orientation="vertical"
     android:theme="@style/Theme.TimerScreen"
     tools:context="raa.example.timerscreen.ui.TimerScreen">
 
@@ -32,8 +32,8 @@
             <raa.example.timerscreen.customView.CornerView
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:layout_margin="60dp"
                 android:layout_gravity="center"
+                android:layout_margin="60dp"
                 app:radius="200dp">
 
                 <eightbitlab.com.blurview.BlurView
@@ -42,10 +42,43 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/corner_background">
 
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/pie"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pie"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="17,"
+                                android:textColor="@color/gray_400"
+                                android:textSize="60dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="134560 %"
+                                android:textColor="@color/gray_400"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </FrameLayout>
+
                 </eightbitlab.com.blurview.BlurView>
             </raa.example.timerscreen.customView.CornerView>
 

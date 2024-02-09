@@ -15,8 +15,19 @@
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/gray_300"
         android:textColor="@color/white"
+        android:maxLines="1"
         android:hint="Введите имя" />
+
+    <EditText
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/gray_300"
+        android:textColor="@color/white"
+        android:hint="Срочка"
+        android:maxLines="1"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,6 +60,43 @@
             android:padding="15dp"
             app:icon="@drawable/pencil" />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/end_service_up_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Окончание службы" />
+
+
+        <TextView
+            style="@style/MainTextViewStyle.Gray"
+            android:id="@+id/end_service_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="23 января 2024"
+            android:textSize="20dp"
+            android:layout_below="@id/end_service_up_text"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/place_of_service_up_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Место службы" />
+
+    <EditText
+        android:id="@+id/place_of_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/gray_300"
+        android:textColor="@color/white"
+        android:hint="Засекречено" />
 
 
 </LinearLayout>

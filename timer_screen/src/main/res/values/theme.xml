@@ -2,6 +2,11 @@
 
     <style name="Theme.TimerScreen" parent="Base.Theme.VagabondVentures">
 
+        <item name="materialTimePickerTheme">@style/AppTheme.MaterialTimePickerTheme</item>
     </style>
 
+
+    <style name="AppTheme.MaterialTimePickerTheme" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="colorPrimary">@color/gray_200</item>
+    </style>
 </resources>

@@ -9,12 +9,10 @@ class Mapper {
         return PersonParamEntity(
             id=param.id,
             name=param.name,
-            year=param.year,
-            month=param.month,
-            day=param.day,
-            yearEnd=param.yearEnd,
-            monthEnd=param.monthEnd,
-            dayEnd=param.dayEnd,
+            startDate = param.startDate,
+            endDate = param.endDate,
+            additionalInfo = param.additionalInfo,
+            placeOfService = param.placeOfService,
             isSelected = param.isSelected
         )
     }
@@ -23,12 +21,10 @@ class Mapper {
         return PersonParam(
             id=param.id,
             name=param.name,
-            year=param.year,
-            month=param.month,
-            day=param.day,
-            yearEnd=param.yearEnd,
-            monthEnd=param.monthEnd,
-            dayEnd=param.dayEnd,
+            startDate = param.startDate,
+            endDate = param.endDate,
+            additionalInfo = param.additionalInfo,
+            placeOfService = param.placeOfService,
             isSelected = param.isSelected
         )
     }

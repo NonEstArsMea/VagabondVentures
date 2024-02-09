@@ -36,5 +36,12 @@ class AddPersonFragmentViewModel(application: Application) :
         }
     }
 
+    fun deleteItem(id: Int){
+        viewModelScope.launch(Dispatchers.Default) {
+            repository.delPersonParam(id)
+            updateList()
+        }
+    }
+
 
 }

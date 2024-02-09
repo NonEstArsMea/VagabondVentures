@@ -12,6 +12,7 @@ import raa.example.res.R.color.col_second_background_color
 import raa.example.timer_screen.R
 import raa.example.timerscreen.domain.PersonParam
 import raa.example.timerscreen.renameMonth
+import java.util.Calendar
 
 class RecycleViewAdapter :
     ListAdapter<PersonParam, RecycleViewAdapter.RVOnSearchFragmentViewHolder>(
@@ -19,6 +20,7 @@ class RecycleViewAdapter :
     ) {
 
     var onClickListener: ((PersonParam) -> (Unit))? = null
+    var onLongClickListener: ((Int) -> (Unit))? = null
 
     class RVOnSearchFragmentViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val name = view.findViewById<TextView>(R.id.name)
@@ -55,13 +57,18 @@ class RecycleViewAdapter :
 
     override fun onBindViewHolder(holder: RVOnSearchFragmentViewHolder, position: Int) {
         currentList[position].apply {
-            val dateStart = "$day ${renameMonth(month)} $year"
-            val dateEnd = if (monthEnd != null) "$dayEnd ${renameMonth(monthEnd)} $yearEnd" else ""
-            holder.bind(name, dateStart, dateEnd, position + 1)
+            val startService = convertTime(startDate)
+            val endService = convertTime(endDate)
+            holder.bind(name, startService, endService, position + 1)
         }
 
         holder.view.setOnClickListener {
             onClickListener?.invoke(currentList[position])
+        }
+
+        holder.view.setOnLongClickListener {
+            onLongClickListener?.invoke(currentList[position].id)
+            true
         }
 
     }
@@ -69,6 +76,16 @@ class RecycleViewAdapter :
     override fun getItemViewType(position: Int): Int {
 
         return if ((currentList[position].isSelected == 1) or (currentList.size == 1)) ENEBLED_TYPE else DESABLET_TYPE
+    }
+
+    private fun convertTime(time: Long): String {
+        val calendar = Calendar.getInstance()
+
+        calendar.timeInMillis = time
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        return "$day ${renameMonth(month)} $year"
     }
 
     companion object {

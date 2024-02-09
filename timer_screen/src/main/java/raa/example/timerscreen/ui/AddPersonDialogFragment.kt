@@ -6,15 +6,18 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AlertDialog.*
+import androidx.core.util.Pair
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import raa.example.timer_screen.R
+import raa.example.timerscreen.domain.PersonParam
 import raa.example.timerscreen.renameMonth
 import java.text.DateFormat
 import java.util.Calendar
@@ -23,28 +26,26 @@ import java.util.Date
 class AddPersonDialogFragment : DialogFragment() {
 
     interface DialogListener {
-        fun onPositiveClick(year: Int, month: Int, day: Int, text: String)
+        fun onPositiveClick(param: PersonParam)
         fun onNegativeClick()
     }
 
     private lateinit var listener: DialogListener
     private lateinit var startService: TextView
+    private lateinit var endService: TextView
     private lateinit var editText: EditText
     private lateinit var textColor: ColorStateList
     private lateinit var editDateButton: Button
 
-    private val mainCalendar = Calendar.getInstance()
-    private var year = mainCalendar.get(Calendar.YEAR)
-    private var month = mainCalendar.get(Calendar.MONTH)
-    private var day = mainCalendar.get(Calendar.DAY_OF_MONTH)
+    private var startServiceTime: Long = 0
+    private var endServiceTime: Long = 0
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = MaterialAlertDialogBuilder(requireActivity())
         val view = requireActivity().layoutInflater.inflate(R.layout.dialog_custom_layout, null)
 
-        editText = view.findViewById(R.id.edit_text)
-        startService = view.findViewById(R.id.start_service_text)
-        editDateButton = view.findViewById(R.id.edit_date_button)
+
+        initView(view)
 
         editDateButton.setOnClickListener {
             openDatePicker()
@@ -54,11 +55,17 @@ class AddPersonDialogFragment : DialogFragment() {
         val dialog: AlertDialog = builder.setView(view)
             .setTitle("Создание профиля")
             .apply {
-                startService.text = "$day ${renameMonth(month)} $year"
+                startService.text = convertTime(getTimePair().first)
+                endService.text = convertTime(getTimePair().second)
             }
             .setPositiveButton("Добавить") { _, _ ->
-                val text = editText.text.toString()
-                listener.onPositiveClick(year, month, day, text)
+                val person = PersonParam(
+                    editText.text.toString(),
+                    startServiceTime,
+                    endServiceTime,
+
+                )
+                listener.onPositiveClick(person)
             }
             .setNegativeButton("Отменить") { _, _ ->
                 listener.onNegativeClick()
@@ -114,20 +121,45 @@ class AddPersonDialogFragment : DialogFragment() {
     }
 
     private fun openDatePicker() {
-        val datePicker = MaterialDatePicker.Builder.datePicker()
+        val datePicker = MaterialDatePicker.Builder.dateRangePicker()
             .setTitleText("Выберите дату")
+            .setSelection(getTimePair())
             .build()
 
         datePicker.addOnPositiveButtonClickListener { selection ->
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = selection
-            year = calendar.get(Calendar.YEAR)
-            month = calendar.get(Calendar.MONTH)
-            day = calendar.get(Calendar.DAY_OF_MONTH)
+            startService.text = convertTime(selection.first)
+            endService.text = convertTime(selection.second)
 
-            startService.text = "$day ${renameMonth(month)} $year"
+            startServiceTime = selection.first
+            endServiceTime = selection.second
         }
 
         datePicker.show(requireActivity().supportFragmentManager, datePicker.toString())
+    }
+
+    private fun convertTime(time: Long): String {
+        val calendar = Calendar.getInstance()
+
+        calendar.timeInMillis = time
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        return "$day ${renameMonth(month)} $year"
+    }
+
+    private fun getTimePair(): Pair<Long, Long> {
+        val firstTime = Calendar.getInstance().timeInMillis
+        val calendarSecond = Calendar.getInstance()
+        calendarSecond.add(Calendar.YEAR, 1)
+        val seconTime = calendarSecond.timeInMillis
+        calendarSecond.add(Calendar.YEAR, -1)
+        return (Pair(firstTime, seconTime))
+    }
+
+    private fun initView(view: View){
+        editText = view.findViewById(R.id.edit_text)
+        startService = view.findViewById(R.id.start_service_text)
+        endService = view.findViewById(R.id.end_service_text)
+        editDateButton = view.findViewById(R.id.edit_date_button)
     }
 }
