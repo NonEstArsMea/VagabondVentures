@@ -1,6 +1,7 @@
 package raa.example.timerscreen.data
 
 import android.app.Application
+import android.util.Log
 import raa.example.timerscreen.data.dataBase.Mapper
 import raa.example.timerscreen.data.dataBase.PersonsDatabase
 import raa.example.timerscreen.domain.PersonParam
@@ -32,10 +33,15 @@ class RepositoryImpl(
         profileDao.delPersonParam(delId)
     }
 
-    fun getPersonsParam(personParamID: Int): PersonParam {
-        val dbModel = profileDao.getPersonParam(personParamID)
-        return mapper.mapDBmodelToEntity(dbModel)
+    fun getSelectedPersonsParam(): PersonParam {
+        val dbModel = profileDao.getSelectedPersonParam()
+        return if(dbModel != null){
+            mapper.mapDBmodelToEntity(dbModel)
+        }else{
+            PersonParam.getError()
+        }
     }
+
 
     fun getPersonParamList(): List<PersonParam> {
         return profileDao.getPersonsParamList().map {

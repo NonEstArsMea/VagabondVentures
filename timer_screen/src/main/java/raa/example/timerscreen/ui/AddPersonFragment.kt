@@ -38,20 +38,24 @@ class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {
 
         viewModel.updateList()
 
+        // Создание диалога по нажатию на кнопку
         binding.fragmentAddPersonButton.setOnClickListener {
             val dialogFragment = AddPersonDialogFragment()
             dialogFragment.setDialogListener(this)
             dialogFragment.show(requireActivity().supportFragmentManager, "my_dialog")
         }
 
+        // Кнопка возврата
         binding.backButton.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+
 
         viewModel.list.observe(viewLifecycleOwner){
             mainParamAdapter.submitList(it)
         }
 
+        // По нажатию по кнопке
         mainParamAdapter.onClickListener = {
             viewModel.setSelected(it.id)
         }

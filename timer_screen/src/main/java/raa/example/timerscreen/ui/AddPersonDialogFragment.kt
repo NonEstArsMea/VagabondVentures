@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -40,6 +41,7 @@ class AddPersonDialogFragment : DialogFragment() {
     private var startServiceTime: Long = 0
     private var endServiceTime: Long = 0
 
+    // Диалог для создания юзера
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = MaterialAlertDialogBuilder(requireActivity())
         val view = requireActivity().layoutInflater.inflate(R.layout.dialog_custom_layout, null)
@@ -61,10 +63,11 @@ class AddPersonDialogFragment : DialogFragment() {
             .setPositiveButton("Добавить") { _, _ ->
                 val person = PersonParam(
                     editText.text.toString(),
-                    startServiceTime,
-                    endServiceTime,
+                    getTimePair().first,
+                    getTimePair().second,
 
                 )
+                Log.e("tag", person.toString())
                 listener.onPositiveClick(person)
             }
             .setNegativeButton("Отменить") { _, _ ->

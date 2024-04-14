@@ -58,6 +58,8 @@ class TimerScreen : Fragment() {
             container?.openFragment()
 
         }
+
+        viewModel.setNewTime()
     }
 
     private fun initBlurView(view: Drawable) {

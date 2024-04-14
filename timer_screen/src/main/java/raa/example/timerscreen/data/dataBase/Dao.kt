@@ -19,4 +19,7 @@ interface Dao {
 
     @Query("SELECT * FROM persons_profiles WHERE id=:getId LIMIT 1")
     fun getPersonParam(getId: Int): PersonParamEntity
+
+    @Query("SELECT * FROM persons_profiles WHERE isSelected = 1 LIMIT 1")
+    fun getSelectedPersonParam(): PersonParamEntity
 }

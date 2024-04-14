@@ -11,5 +11,10 @@ data class PersonParam(
 ) {
     companion object {
         private const val UNDEFINED_ID = 0
+        const val ERROR_ID = -1
+
+        fun getError(): PersonParam {
+            return PersonParam("", 0, 0, "", "", ERROR_ID, 0)
+        }
     }
 }
