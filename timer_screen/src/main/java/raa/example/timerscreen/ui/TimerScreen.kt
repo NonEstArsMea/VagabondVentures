@@ -123,14 +123,13 @@ class TimerScreen : Fragment() {
 
         lifecycleScope.launch {
             viewModel.state
-                .transform {
-                    emit(it)
-                }
-                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect {
+                    Log.e("launch_main_view", it.toString())
                     when (it) {
                         is Content -> {
                             val dataSet = getPieDataSet(it.entry)
+                            Log.e("launch_main_view", dataSet.toString())
                             drawPie(PieData(dataSet), it.a)
                         }
 

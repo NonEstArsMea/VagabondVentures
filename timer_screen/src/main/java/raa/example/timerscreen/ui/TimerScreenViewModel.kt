@@ -9,6 +9,7 @@ import com.github.mikephil.charting.data.PieEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import raa.example.timerscreen.Content
@@ -16,6 +17,7 @@ import raa.example.timerscreen.State
 import raa.example.timerscreen.data.RepositoryImpl
 import raa.example.timerscreen.domain.PersonParam
 import java.util.Calendar
+import kotlin.math.abs
 
 class TimerScreenViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -26,9 +28,10 @@ class TimerScreenViewModel(application: Application) : AndroidViewModel(applicat
     private val entries = ArrayList<PieEntry>()
 
 
-    private fun getTime(): Flow<State> = flow {
+    private fun getTime(): Flow<State> = channelFlow {
         viewModelScope.launch(Dispatchers.Default) {
             val personParam = repository.getSelectedPersonsParam()
+            Log.e("launch_PP", personParam.toString())
             Log.e("param", personParam.toString())
             if (personParam.id != PersonParam.ERROR_ID) {
                 val srokSluzby = personParam.endDate - personParam.startDate
@@ -38,17 +41,21 @@ class TimerScreenViewModel(application: Application) : AndroidViewModel(applicat
                         ((personParam.startDate - Calendar.getInstance().timeInMillis) / srokSluzby).toFloat()
 
 
+                    Log.e("launch_1", personParam.startDate.toString())
+                    Log.e("launch_2", Calendar.getInstance().timeInMillis.toString())
+                    Log.e("launch_3", srokSluzby.toString())
                     entries.add(PieEntry(firstRazn, "Прошло"))
                     entries.add(PieEntry(1 - firstRazn, "Осталось"))
-                    Log.e("launch",Content(entries, firstRazn).toString())
-                    emit(Content(entries, firstRazn))
-//                    while (true) {
-//                        val a = ((personParam.startDate - Calendar.getInstance().timeInMillis) / srokSluzby).toFloat()
-//                        entries[0] = PieEntry(a)
-//                        entries[1] = PieEntry(1 - a)
-//                        emit(Content(entries, (a)))
-//                        delay(1000)
-//                    }
+                    send(Content(entries, firstRazn))
+                    while (true) {
+                        val a =
+                            (abs((personParam.startDate - Calendar.getInstance().timeInMillis)).toFloat() / srokSluzby)
+                        Log.e("launch", a.toString())
+                        entries[0] = PieEntry(a)
+                        entries[1] = PieEntry(1 - a)
+                        send(Content(entries, (a)))
+                        delay(1000)
+                    }
                 }
             }
 
