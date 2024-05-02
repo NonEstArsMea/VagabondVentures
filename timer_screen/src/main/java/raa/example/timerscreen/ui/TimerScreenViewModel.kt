@@ -29,6 +29,7 @@ class TimerScreenViewModel(application: Application) : AndroidViewModel(applicat
     private fun getTime(): Flow<State> = flow {
         viewModelScope.launch(Dispatchers.Default) {
             val personParam = repository.getSelectedPersonsParam()
+            Log.e("param", personParam.toString())
             if (personParam.id != PersonParam.ERROR_ID) {
                 val srokSluzby = personParam.endDate - personParam.startDate
                 var firstRazn = 0f
@@ -39,23 +40,31 @@ class TimerScreenViewModel(application: Application) : AndroidViewModel(applicat
 
                     entries.add(PieEntry(firstRazn, "Прошло"))
                     entries.add(PieEntry(1 - firstRazn, "Осталось"))
-
-                    while (true) {
-                        val a =
-                            ((personParam.startDate - Calendar.getInstance().timeInMillis) / srokSluzby).toFloat()
-                        entries[0] = PieEntry(a)
-                        entries[1] = PieEntry(1 - a)
-                        emit(Content(entries, (a)))
-                        delay(1000)
-                    }
+                    Log.e("launch",Content(entries, firstRazn).toString())
+                    emit(Content(entries, firstRazn))
+//                    while (true) {
+//                        val a = ((personParam.startDate - Calendar.getInstance().timeInMillis) / srokSluzby).toFloat()
+//                        entries[0] = PieEntry(a)
+//                        entries[1] = PieEntry(1 - a)
+//                        emit(Content(entries, (a)))
+//                        delay(1000)
+//                    }
                 }
             }
-            Log.e("param", personParam.toString())
 
 
         }
 
     }
+
+//    private fun getTime(): Flow<State> = flow {
+//        var a = 0
+//        while (a < 1000){
+//            a++
+//            emit(Content(a.toFloat()))
+//            delay(1000)
+//        }
+//    }
 
     fun setNewTime() {
         entries.clear()
