@@ -50,7 +50,6 @@ class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-
         viewModel.list.observe(viewLifecycleOwner){
             mainParamAdapter.submitList(it)
         }
