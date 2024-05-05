@@ -1,6 +1,7 @@
 package raa.example.timerscreen.ui
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Matrix
@@ -26,6 +27,7 @@ import raa.example.timer_screen.databinding.FragmentTimerScreenBinding
 import raa.example.timerscreen.Content
 import raa.example.timerscreen.Loading
 import kotlin.math.cos
+import kotlin.math.floor
 import kotlin.math.sin
 
 
@@ -59,7 +61,7 @@ class TimerScreen : Fragment() {
 
         }
 
-        viewModel.setNewTime()
+        viewModel.loadData()
     }
 
     private fun initBlurView(view: Drawable) {
@@ -119,24 +121,24 @@ class TimerScreen : Fragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun initState() {
 
-        lifecycleScope.launch {
-            viewModel.state
-                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                .collect {
-                    Log.e("launch_main_view", it.toString())
-                    when (it) {
-                        is Content -> {
-                            val dataSet = getPieDataSet(it.entry)
-                            Log.e("launch_main_view", dataSet.toString())
-                            drawPie(PieData(dataSet), it.a)
-                        }
+        viewModel.state.observe(requireActivity()){
+            when (it) {
+                is Content -> {
+                    val dataSet = getPieDataSet(it.entry)
+                    Log.e("launch_main_view", dataSet.toString())
+                    drawPie(PieData(dataSet), it.a)
+                    binding.topText.text = "${it.a.toString().substringBefore('.')}."
 
-                        is Loading -> TODO()
-                    }
+                    binding.bottomText.text = "${it.a.toString().substringAfter('.')}%"
                 }
+
+                is Loading -> TODO()
+            }
         }
+
     }
 
 

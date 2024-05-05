@@ -3,6 +3,8 @@ package raa.example.timerscreen.ui
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.PieEntry
@@ -21,48 +23,25 @@ import kotlin.math.abs
 
 class TimerScreenViewModel(application: Application) : AndroidViewModel(application) {
 
-    var state: Flow<State> = getTime()
+    private var _state = MutableLiveData<State>()
+    val state: LiveData<State>
+        get() = _state
+
 
     private val repository = RepositoryImpl(application)
 
     private val entries = ArrayList<PieEntry>()
 
-
-    private fun getTime(): Flow<State> = channelFlow {
-        viewModelScope.launch(Dispatchers.Default) {
-            val personParam = repository.getSelectedPersonsParam()
-            Log.e("launch_PP", personParam.toString())
-            Log.e("param", personParam.toString())
-            if (personParam.id != PersonParam.ERROR_ID) {
-                val srokSluzby = personParam.endDate - personParam.startDate
-                var firstRazn = 0f
-                if (srokSluzby != 0.toLong()) {
-                    firstRazn =
-                        ((personParam.startDate - Calendar.getInstance().timeInMillis) / srokSluzby).toFloat()
-
-
-                    Log.e("launch_1", personParam.startDate.toString())
-                    Log.e("launch_2", Calendar.getInstance().timeInMillis.toString())
-                    Log.e("launch_3", srokSluzby.toString())
-                    entries.add(PieEntry(firstRazn, "Прошло"))
-                    entries.add(PieEntry(1 - firstRazn, "Осталось"))
-                    send(Content(entries, firstRazn))
-                    while (true) {
-                        val a =
-                            (abs((personParam.startDate - Calendar.getInstance().timeInMillis)).toFloat() / srokSluzby)
-                        Log.e("launch", a.toString())
-                        entries[0] = PieEntry(a)
-                        entries[1] = PieEntry(1 - a)
-                        send(Content(entries, (a)))
-                        delay(1000)
-                    }
+    fun loadData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getTime()
+                .collect {
+                    _state.postValue(it)
                 }
-            }
-
-
         }
-
     }
+
+
 
 //    private fun getTime(): Flow<State> = flow {
 //        var a = 0
@@ -73,9 +52,5 @@ class TimerScreenViewModel(application: Application) : AndroidViewModel(applicat
 //        }
 //    }
 
-    fun setNewTime() {
-        entries.clear()
-        state = getTime()
-    }
 
 }

@@ -5,6 +5,7 @@
         <item name="colorSurfaceContainerHigh">@color/col_background_color</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorOnSurfaceVariant">@color/gray_200</item>
+        <item name="colorSecondaryContainer">@color/gray_500</item>
 
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
