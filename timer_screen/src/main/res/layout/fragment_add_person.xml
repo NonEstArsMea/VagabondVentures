@@ -7,7 +7,7 @@
     android:theme="@style/Theme.TimerScreen"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context="raa.example.timerscreen.ui.AddPersonFragment">
+    tools:context="raa.example.timerscreen.addPersonFragment.ui.AddPersonFragment">
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"

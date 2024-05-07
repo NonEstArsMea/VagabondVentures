@@ -1,4 +1,4 @@
-package raa.example.timerscreen.ui
+package raa.example.timerscreen.addPersonFragment.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -80,7 +80,7 @@ class AddPersonFragment : Fragment(), AddPersonDialogFragment.DialogListener {
 
     companion object {
         @JvmStatic
-        fun newInstance(): AddPersonFragment{
+        fun newInstance(): AddPersonFragment {
             return AddPersonFragment()
         }
 

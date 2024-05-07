@@ -1,4 +1,4 @@
-package raa.example.timerscreen.ui
+package raa.example.timerscreen.addPersonFragment.ui
 
 import android.app.Dialog
 import android.content.res.ColorStateList
@@ -20,9 +20,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import raa.example.timer_screen.R
 import raa.example.timerscreen.domain.PersonParam
 import raa.example.timerscreen.renameMonth
-import java.text.DateFormat
 import java.util.Calendar
-import java.util.Date
 
 class AddPersonDialogFragment : DialogFragment() {
 

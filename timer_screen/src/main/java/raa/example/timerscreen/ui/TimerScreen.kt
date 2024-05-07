@@ -130,9 +130,9 @@ class TimerScreen : Fragment() {
                     val dataSet = getPieDataSet(it.entry)
                     Log.e("launch_main_view", dataSet.toString())
                     drawPie(PieData(dataSet), it.a)
-                    binding.topText.text = "${it.a.toString().substringBefore('.')}."
+                    binding.topText.text = (it.a * 100).toString().substringBefore('.') + "."
 
-                    binding.bottomText.text = "${it.a.toString().substringAfter('.')}%"
+                    binding.bottomText.text = (it.a * 100).toString().substringAfter('.') + "%"
                 }
 
                 is Loading -> TODO()

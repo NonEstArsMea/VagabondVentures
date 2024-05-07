@@ -4,15 +4,12 @@ import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import raa.example.articles.ArticlesScreen
 import raa.example.calendar.CalendarScreen
 import raa.example.chat.ChatScreen
 import raa.example.setting.SettingScreen
-import raa.example.timerscreen.ui.AddPersonFragment
+import raa.example.timerscreen.addPersonFragment.ui.AddPersonFragment
 import raa.example.timerscreen.ui.TimerScreen
 import raa.example.vagabondventures.databinding.ActivityMainBinding
 

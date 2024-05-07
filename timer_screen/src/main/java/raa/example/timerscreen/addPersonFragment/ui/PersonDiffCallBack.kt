@@ -1,4 +1,4 @@
-package raa.example.timerscreen.ui
+package raa.example.timerscreen.addPersonFragment.ui
 
 import androidx.recyclerview.widget.DiffUtil
 import raa.example.timerscreen.domain.PersonParam

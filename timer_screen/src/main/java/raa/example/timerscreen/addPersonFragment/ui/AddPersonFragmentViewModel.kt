@@ -1,4 +1,4 @@
-package raa.example.timerscreen.ui
+package raa.example.timerscreen.addPersonFragment.ui
 
 import android.app.Application
 import android.util.Log
