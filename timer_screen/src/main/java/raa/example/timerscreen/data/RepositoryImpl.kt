@@ -11,12 +11,17 @@ import raa.example.timerscreen.State
 import raa.example.timerscreen.data.dataBase.Mapper
 import raa.example.timerscreen.data.dataBase.PersonsDatabase
 import raa.example.timerscreen.domain.PersonParam
+import raa.example.timerscreen.ui.TimerScreen
 import java.util.Calendar
 import kotlin.math.abs
 
 class RepositoryImpl(
-    application: Application
+    private val application: Application
 ) {
+
+    interface SetNewItem{
+            fun setNewItem()
+    }
 
     private val profileDao = PersonsDatabase.getInstance(application).personParamDao()
     private val mapper = Mapper()
@@ -30,7 +35,11 @@ class RepositoryImpl(
         listOfPP.forEach {
             it.isSelected = if (it.id == id) 1 else 0
             profileDao.addPersonParam(mapper.mapEntityToDBmodel(it))
+
         }
+        // Говорим, что назначен новый элемент
+        val container = application as? SetNewItem
+        container?.setNewItem()
     }
 
     fun addPersonParam(personParam: PersonParam) {

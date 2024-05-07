@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.PieEntry
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -30,15 +31,24 @@ class TimerScreenViewModel(application: Application) : AndroidViewModel(applicat
 
     private val repository = RepositoryImpl(application)
 
+    var flowJob : Job = viewModelScope.launch {  }
+
+
+
     private val entries = ArrayList<PieEntry>()
 
     fun loadData() {
-        viewModelScope.launch(Dispatchers.IO) {
+        flowJob = viewModelScope.launch(Dispatchers.IO) {
             repository.getTime()
                 .collect {
                     _state.postValue(it)
                 }
         }
+    }
+
+    fun getNewData(){
+        flowJob.cancel()
+        loadData()
     }
 
 

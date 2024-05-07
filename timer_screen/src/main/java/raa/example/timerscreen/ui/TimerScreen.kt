@@ -26,12 +26,13 @@ import kotlinx.coroutines.launch
 import raa.example.timer_screen.databinding.FragmentTimerScreenBinding
 import raa.example.timerscreen.Content
 import raa.example.timerscreen.Loading
+import raa.example.timerscreen.data.RepositoryImpl
 import kotlin.math.cos
 import kotlin.math.floor
 import kotlin.math.sin
 
 
-class TimerScreen : Fragment() {
+class TimerScreen : Fragment(), RepositoryImpl.SetNewItem {
 
     private var _binding: FragmentTimerScreenBinding? = null
     private val binding get() = _binding!!
@@ -172,6 +173,10 @@ class TimerScreen : Fragment() {
         dataSet.sliceSpace = 0f
 
         return dataSet
+    }
+
+    override fun setNewItem() {
+        viewModel.getNewData()
     }
 
     interface OpenAddPersonFragment {

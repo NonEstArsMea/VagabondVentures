@@ -24,20 +24,21 @@ class AddPersonFragmentViewModel(application: Application) :
 
     }
 
+    // Обновляем список ( идет изменение цвета или смещение, вызванное удалением или добавлением)
     fun updateList() {
         viewModelScope.launch(Dispatchers.Default) {
             list.postValue(repository.getPersonParamList())
         }
     }
 
-    fun setSelected(id: Int){
+    fun setSelected(id: Int) {
         viewModelScope.launch(Dispatchers.Default) {
             repository.setSelectedPersonsParam(id)
             updateList()
         }
     }
 
-    fun deleteItem(id: Int){
+    fun deleteItem(id: Int) {
         viewModelScope.launch(Dispatchers.Default) {
             repository.delPersonParam(id)
             updateList()

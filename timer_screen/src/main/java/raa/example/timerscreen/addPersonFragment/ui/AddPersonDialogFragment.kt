@@ -44,9 +44,13 @@ class AddPersonDialogFragment : DialogFragment() {
         val builder = MaterialAlertDialogBuilder(requireActivity())
         val view = requireActivity().layoutInflater.inflate(R.layout.dialog_custom_layout, null)
 
+        extractedTime()
+
 
         initView(view)
 
+
+        // Изменение срока службы
         editDateButton.setOnClickListener {
             openDatePicker()
         }
@@ -105,6 +109,13 @@ class AddPersonDialogFragment : DialogFragment() {
         return dialog
     }
 
+    private fun extractedTime() {
+        val calendar = Calendar.getInstance()
+        startServiceTime = calendar.timeInMillis
+        calendar.add(Calendar.YEAR, 1)
+        endServiceTime = calendar.timeInMillis
+    }
+
 
     fun setDialogListener(listener: DialogListener) {
         this.listener = listener
@@ -121,6 +132,7 @@ class AddPersonDialogFragment : DialogFragment() {
 
     }
 
+    // Изменение срока службы пикер
     private fun openDatePicker() {
         val datePicker = MaterialDatePicker.Builder.dateRangePicker()
             .setTitleText("Выберите дату")
@@ -138,6 +150,7 @@ class AddPersonDialogFragment : DialogFragment() {
         datePicker.show(requireActivity().supportFragmentManager, datePicker.toString())
     }
 
+    // КОнвертация времени
     private fun convertTime(time: Long): String {
         val calendar = Calendar.getInstance()
 
@@ -148,12 +161,11 @@ class AddPersonDialogFragment : DialogFragment() {
         return "$day ${renameMonth(month)} $year"
     }
 
+    // СОздание пар, которые будут сохранены в базе данных
     private fun getTimePair(): Pair<Long, Long> {
-        val firstTime = Calendar.getInstance().timeInMillis
-        val calendarSecond = Calendar.getInstance()
-        calendarSecond.add(Calendar.YEAR, 1)
-        val seconTime = calendarSecond.timeInMillis
-        calendarSecond.add(Calendar.YEAR, -1)
+        val firstTime = startServiceTime
+        val seconTime = endServiceTime
+
         return (Pair(firstTime, seconTime))
     }
 
