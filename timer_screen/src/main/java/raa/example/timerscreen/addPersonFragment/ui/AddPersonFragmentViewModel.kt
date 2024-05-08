@@ -14,7 +14,7 @@ class AddPersonFragmentViewModel(application: Application) :
     AndroidViewModel(application) {
 
     val list = MutableLiveData<List<PersonParam>>()
-    private val repository = RepositoryImpl(application)
+    private val repository = RepositoryImpl(application, viewModelScope)
 
     fun setParam(personParam: PersonParam) {
         viewModelScope.launch(Dispatchers.Default) {

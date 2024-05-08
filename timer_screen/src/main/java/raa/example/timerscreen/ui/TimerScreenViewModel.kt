@@ -29,7 +29,7 @@ class TimerScreenViewModel(application: Application) : AndroidViewModel(applicat
         get() = _state
 
 
-    private val repository = RepositoryImpl(application)
+    private val repository = RepositoryImpl(application,viewModelScope)
 
     var flowJob : Job = viewModelScope.launch {  }
 
@@ -39,6 +39,7 @@ class TimerScreenViewModel(application: Application) : AndroidViewModel(applicat
 
     fun loadData() {
         flowJob = viewModelScope.launch(Dispatchers.IO) {
+            Log.e("launch", "start In ViewModel")
             repository.getTime()
                 .collect {
                     _state.postValue(it)

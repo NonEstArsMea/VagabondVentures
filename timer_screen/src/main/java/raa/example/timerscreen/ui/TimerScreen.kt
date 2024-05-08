@@ -26,13 +26,14 @@ import kotlinx.coroutines.launch
 import raa.example.timer_screen.databinding.FragmentTimerScreenBinding
 import raa.example.timerscreen.Content
 import raa.example.timerscreen.Loading
+import raa.example.timerscreen.addPersonFragment.ui.AddPersonFragment
 import raa.example.timerscreen.data.RepositoryImpl
 import kotlin.math.cos
 import kotlin.math.floor
 import kotlin.math.sin
 
 
-class TimerScreen : Fragment(), RepositoryImpl.SetNewItem {
+class TimerScreen : Fragment(){
 
     private var _binding: FragmentTimerScreenBinding? = null
     private val binding get() = _binding!!
@@ -63,6 +64,11 @@ class TimerScreen : Fragment(), RepositoryImpl.SetNewItem {
         }
 
         viewModel.loadData()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     private fun initBlurView(view: Drawable) {
@@ -126,14 +132,15 @@ class TimerScreen : Fragment(), RepositoryImpl.SetNewItem {
     private fun initState() {
 
         viewModel.state.observe(requireActivity()){
+            val dataSet: PieDataSet
             when (it) {
                 is Content -> {
-                    val dataSet = getPieDataSet(it.entry)
+                    dataSet = getPieDataSet(it.entry)
                     Log.e("launch_main_view", dataSet.toString())
                     drawPie(PieData(dataSet), it.a)
-                    binding.topText.text = (it.a * 100).toString().substringBefore('.') + "."
+                    binding.topText.text = (it.a * 100f).toString().substringBefore('.') + "."
 
-                    binding.bottomText.text = (it.a * 100).toString().substringAfter('.') + "%"
+                    binding.bottomText.text = (it.a * 100f).toString().substringAfter('.') + "%"
                 }
 
                 is Loading -> TODO()
@@ -154,7 +161,8 @@ class TimerScreen : Fragment(), RepositoryImpl.SetNewItem {
             setTransparentCircleColor(Color.TRANSPARENT)
             setDrawEntryLabels(false) // Не рисовать метки внутри секторов
             setDrawCenterText(true)
-            setEntryLabelColor(Color.TRANSPARENT)
+            setEntryLabelColor(Color.RED)
+            //setEntryLabelColor(Color.TRANSPARENT)
             legend.isEnabled = false // Не показывать легенду
             setNoDataTextColor(Color.TRANSPARENT)
             animateY(0)
@@ -169,15 +177,12 @@ class TimerScreen : Fragment(), RepositoryImpl.SetNewItem {
             Color.WHITE,
             Color.argb(128,255,255,255)
         )
-        //dataSet.valueTextColor = Color.TRANSPARENT
+        dataSet.valueTextColor = Color.TRANSPARENT
         dataSet.sliceSpace = 0f
 
         return dataSet
     }
 
-    override fun setNewItem() {
-        viewModel.getNewData()
-    }
 
     interface OpenAddPersonFragment {
         fun openFragment()
